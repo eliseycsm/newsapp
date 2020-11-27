@@ -7,12 +7,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule }from '@angular/common/http';
 import { StartComponent } from './components/start.component';
 import { LoginComponent } from './components/login.component'
+import { NewsDB } from './components/db.service';
+import { CheckApiComponent } from './components/check-api.component';
+import { ResultComponent } from './components/result.component';
+
 
 const ROUTES: Routes = [
-  {path: '', component: MainComponent},
-  {path: 'searchList', component: SearchListComponent},
-  {path: 'search', component: SearchComponent},
-  {path: 'search/:type/:q', component: ResultComponent},
+  {path: '', component: CheckApiComponent},
+  {path: 'start', component: StartComponent},
+  {path: 'login', component: LoginComponent},
+  // {path: 'search', component: SearchComponent},
+  {path: 'results/:code', component: ResultComponent},
   {path: '**', redirectTo: "/", pathMatch:'full'},
 ]
 
@@ -20,7 +25,9 @@ const ROUTES: Routes = [
   declarations: [
     AppComponent,
     StartComponent,
-    LoginComponent
+    LoginComponent,
+    CheckApiComponent,
+    ResultComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +37,7 @@ const ROUTES: Routes = [
     HttpClientModule
     
   ],
-  providers: [],
+  providers: [NewsDB],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
