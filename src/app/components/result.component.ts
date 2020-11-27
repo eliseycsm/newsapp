@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NewsDB } from './db.service';
-import { Country } from './models';
+import { Country, Result } from './models';
 
 @Component({
   selector: 'app-result',
@@ -82,13 +82,22 @@ export class ResultComponent implements OnInit {
             content: d.content
           }
         })
-    console.info("made news call")
-    //add each country into countrydb
-    for (let article of this.articles){
-      //console.log("article:", article)
-      //this.countrydb.addCountry(cty)
+      console.info("made news call")
+      
+      for (let article of this.articles) {
+        let result = article
+        result.saved = false
+        result.code = this.code
+        result.timestamp = Date.now()
+
+        this.resultsdb.addResults(result as Result)
+
+      }
+      
+    
+    
     }
-      })
+    )
     
   }
 

@@ -1,6 +1,6 @@
 import Dexie from 'dexie';
 import {Injectable} from '@angular/core'
-import { Country, LoginDetails, Result, SearchResults } from './models';
+import { Country, LoginDetails, Result } from './models';
 
 
 @Injectable() //to make it into a service
@@ -8,8 +8,8 @@ export class NewsDB extends Dexie{
     //create tables
     private apiDB: Dexie.Table<LoginDetails, string> 
     private countryDB: Dexie.Table<Country, string> 
-    private resultsDB: Dexie.Table<SearchResults, Result> 
-
+    private resultsDB: Dexie.Table<Result, Result> 
+    i
     constructor() {
         //database name must be first line
         super('newsdb')
@@ -18,7 +18,7 @@ export class NewsDB extends Dexie{
         this.version(1).stores({  
             apidb: "apikey",
             countrydb: "code",
-            resultdb: "countryCode"
+            resultdb: "code,timestamp"
         })
 
         //get reference to the collections
@@ -57,7 +57,7 @@ export class NewsDB extends Dexie{
 
 
     //resultsdb functions
-    async addResults(result: SearchResults): Promise<any>{
+    async addResults(result: Result): Promise<any>{
         return await this.resultsDB.put(result)
         //or also can use this.todo.add(t)  <- but add is an insert vs put which is a upsert    
     }

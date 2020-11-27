@@ -9,8 +9,9 @@ export interface Country {
 }
 
 export interface Result {
+    code: string,
     saved: string,
-    id: string,
+    timestamp: string,
     src: string,
     author: string,
     title: string,
@@ -20,9 +21,9 @@ export interface Result {
     publishedAt: string,
     content: string
 }
-export interface SearchResults {
+/* export interface SearchResults {
     country: string,
     timestamp: Date,
     results: Result[]
-}
+} */
 

@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
       apikey: this.apikey
     }
     await this.apiDB.addApi(logindata)
+    this.router.navigate(['/start'])
   }
   async onDelete(){
     this.apikey = this.form.get('apikey').value
