@@ -120,5 +120,8 @@
       }
     }
   },
-  "defaultProject": "newsapp"
+  "defaultProject": "newsapp",
+  "cli": {
+    "analytics": false
+  }
 }
