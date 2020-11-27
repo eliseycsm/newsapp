@@ -1,0 +1,18 @@
+
+<h2>Settings</h2>
+
+<div class="container">
+
+    <form [formGroup]="form">
+        <div>
+            <label for="news_api">NewsAPI.org</label>
+            <input type="text" formControlName="apikey" placeholder="API from newsapi.org">
+            <div *ngIf="form.invalid">Please enter the API key from newsapi.org</div>
+        </div>
+        <div class="button-group d-flex justify-content-between">
+            <button type="button" (click)= "onBack()">Back</button>
+            <button type="button" (click)="onDelete()" [disabled]="form.invalid">Delete</button>
+            <button type="button" (click)="onAdd()" [disabled]="form.invalid">Add</button>
+            <!-- <button type="button" (click)="showVals()">show vals</button> -->
+        </div>
+</form>

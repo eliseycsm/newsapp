@@ -1,0 +1,13 @@
+<div class="container d-flex justify-content-between">
+    <h1>Countries</h1>
+    <button type="button" (click)="goSettings()">Settings</button>
+</div>
+
+<ul class="list-group d-flex" *ngFor="let cty of countries">
+    <li class="list-group-item d-flex  justify-content-between" [routerLink]="['/results', cty.code ]">
+        <a [routerLink]="['/results', cty.code ]">{{cty.name}}</a>
+        <img src={{cty.flag}}  alt={{cty.name}} style="width: 100px">
+    </li>
+    
+  </ul>
+
