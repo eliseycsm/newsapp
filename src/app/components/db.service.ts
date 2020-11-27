@@ -62,8 +62,11 @@ export class NewsDB extends Dexie{
         //or also can use this.todo.add(t)  <- but add is an insert vs put which is a upsert    
     }
 
-    async deleteResults(country: string): Promise<any> {
-        return (await this.resultsDB.where("country").anyOf(country)
+    async getResults(): Promise<Result[]> {
+        return (await this.resultsDB.toArray())
+    }
+    async deleteResults(result: Result): Promise<any> {
+        return (await this.resultsDB.where("timestamp").anyOf(result.timestamp)
             .delete())
     }
 }

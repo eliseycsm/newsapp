@@ -58,42 +58,57 @@ export class ResultComponent implements OnInit {
   
   getNewsResults(){
 
-    let params = new HttpParams()
-      .set("country", this.code)
-      .set("category", "general")
-      .set("pageSize", '30')
+    this.resultsdb.getResults().then(
+      res => {
+        if (res.length != 0) {
+          let timeNow = Date.now()
 
-    const headers = (new HttpHeaders())
-      .set('x-api-key', this.apiKey)
-
-    this.http.get<any>(this.ENDPOINT, {params: params, headers: headers}).toPromise()
-      .then(res => {
-        res = res['articles']
-        console.log("news results:", res)
-        this.articles = res.map( d => {
-          return { 
-            src: d.source,
-            author: d.author,
-            title: d.title,
-            description: d.description,
-            url: d.url,
-            image: d.urlToImage,
-            publishedAt: d.publishedAt,
-            content: d.content
+          for (let cache of res) {
+            let timeDiff = timeNow - parseInt(cache.timestamp)
+            if(Boolean(cache.saved) == false && timeDiff > 5 * 1000 * 60)
+            {
+              this.resultsdb.deleteResults(cache)
+            }
           }
-        })
-      console.info("made news call")
-      
-      for (let article of this.articles) {
-        let result = article
-        result.saved = false
-        result.code = this.code
-        result.timestamp = Date.now()
+        } 
 
-        this.resultsdb.addResults(result as Result)
+      let params = new HttpParams()
+        .set("country", this.code)
+        .set("category", "general")
+        .set("pageSize", '30')
 
+      const headers = (new HttpHeaders())
+        .set('x-api-key', this.apiKey)
+
+      this.http.get<any>(this.ENDPOINT, {params: params, headers: headers}).toPromise()
+        .then(res => {
+          res = res['articles']
+          console.log("news results:", res)
+          this.articles = res.map( d => {
+            return { 
+              src: d.source,
+              author: d.author,
+              title: d.title,
+              description: d.description,
+              url: d.url,
+              image: d.urlToImage,
+              publishedAt: d.publishedAt,
+              content: d.content
+            }
+          })
+        console.info("made news call")
+        
+        for (let article of this.articles) {
+          let result = article
+          result.saved = false
+          result.code = this.code
+          result.timestamp = Date.now()
+
+          this.resultsdb.addResults(result as Result)
+
+        }
       }
-      
+      ) 
     
     
     }
